@@ -1,0 +1,119 @@
+/* Detalles comunes de navegación y presentación */
+body {
+	position: relative;
+}
+
+body::before {
+	background:
+		radial-gradient(circle at 12% 22%, rgba(155, 216, 195, .08), transparent 24%),
+		radial-gradient(circle at 88% 68%, rgba(233, 155, 124, .07), transparent 26%);
+	content: '';
+	inset: 0;
+	pointer-events: none;
+	position: fixed;
+	z-index: 0;
+}
+
+body > header,
+body > main,
+body > footer {
+	position: relative;
+	z-index: 1;
+}
+
+.barra-superior,
+.menu-secciones {
+	backdrop-filter: blur(14px);
+}
+
+.barra-superior {
+	position: sticky;
+	top: 0;
+	z-index: 20;
+}
+
+.barra-superior nav a,
+.menu-secciones a {
+	position: relative;
+	transition: color .2s ease, background-color .2s ease, transform .2s ease;
+}
+
+.barra-superior nav a::after,
+.menu-secciones a::after {
+	background: currentColor;
+	content: '';
+	height: 2px;
+	left: 50%;
+	opacity: 0;
+	position: absolute;
+	bottom: 2px;
+	transform: translateX(-50%) scaleX(.25);
+	transition: opacity .2s ease, transform .2s ease;
+	width: 70%;
+}
+
+.barra-superior nav a:hover::after,
+.barra-superior nav a:focus-visible::after,
+.menu-secciones a:hover::after,
+.menu-secciones a:focus-visible::after {
+	opacity: .8;
+	transform: translateX(-50%) scaleX(1);
+}
+
+main section,
+main article {
+	animation: detalle-entrada .55s ease both;
+}
+
+main section:nth-child(2n),
+main article:nth-child(2n) {
+	animation-delay: .05s;
+}
+
+main section:not(.portada) {
+	transition: box-shadow .25s ease, border-color .25s ease;
+}
+
+main section:not(.portada):hover {
+	border-color: rgba(155, 216, 195, .5);
+	box-shadow: inset 0 0 0 1px rgba(155, 216, 195, .28), 0 10px 30px rgba(0, 0, 0, .12);
+}
+
+main article:not(.card):not(.stat):not(.timeline-item):hover {
+	box-shadow: 0 10px 24px rgba(0, 0, 0, .22);
+	transform: translateY(-4px);
+	transition: transform .25s ease, box-shadow .25s ease;
+}
+
+main a[href]:not(.marca-sitio):hover {
+	text-shadow: 0 0 16px rgba(155, 216, 195, .22);
+}
+
+@keyframes detalle-entrada {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	body::before,
+	main section,
+	main article,
+	.barra-superior nav a::after,
+	.menu-secciones a::after,
+	main a[href]:not(.marca-sitio) {
+	animation: none !important;
+	transition: none !important;
+	}
+
+	main section:not(.portada):hover,
+	main article:not(.card):not(.stat):not(.timeline-item):hover {
+		box-shadow: none;
+		transform: none;
+	}
+}
